@@ -1,0 +1,56 @@
+require '/home/edvinas/Desktop/ruby/lib/transaction.rb'
+# User class describes users information and it's functionality
+class User
+  attr_reader :name, :surname, :age, :event, :username, :password,
+              :bank_information, :transaction
+  def initialize(username, password, name, surname, age)
+    @username = username
+    @password = password
+    @name = name
+    @surname = surname
+    @age = age
+    @event = 0
+    @friends = []
+    @bank_information = false
+  end
+
+  def create_event
+    @event += 1
+  end
+
+  def add_friend(friend_object)
+    friend_object.request_message = self
+  end
+
+  def get_friend(username)
+    @friends.find { |friend| username.eql?(friend.username) }
+  end
+
+  def firends_list
+    @friends
+  end
+
+  def accept_friend_request(friend_object)
+    @friends.push(friend_object)
+    friend_object.firends_list.push(self)
+  end
+
+  def decline_friend_request
+    @request_message = nil
+  end
+
+  def request_message=(user)
+    @request_message = "#{user.username} want to connect with you"
+  end
+
+  def friend_request_message
+    message = @request_message
+    @request_message = nil
+    message
+  end
+
+  def set_bank_information(card_number, bank_acc_number)
+    @transaction = Transaction.new(card_number, bank_acc_number)
+    @bank_information = true
+  end
+end

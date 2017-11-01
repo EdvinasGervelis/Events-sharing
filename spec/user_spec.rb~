@@ -1,0 +1,73 @@
+require '/home/edvinas/Desktop/ruby/spec/spec_helper.rb'
+describe User do
+  before do
+    @user1 = User.new('username1', 'password', 'name1', 'surname1', 1)
+    @user1.set_bank_information('card_number', 'bank_acc_number')
+    @user2 = User.new('username2', 'password', 'name1', 'surname1', 1)
+    @user2.set_bank_information('card_number', 'bank_acc_number')
+    @user3 = User.new('username3', 'password', 'name2', 'surname2', 1)
+  end
+  it 'have username' do
+    expect(@user1.username).to eql('username1')
+  end
+  it 'have password' do
+    expect(@user1.password).to eql('password')
+  end
+  it 'have name' do
+    expect(@user1.name).to eql('name1')
+  end
+  it 'have surname' do
+    expect(@user1.surname).to eql('surname1')
+  end
+  it 'have age' do
+    expect(@user1.age).to eql(1)
+  end
+  it 'have friend request message' do
+    expect(@user1.friend_request_message).to eql(nil)
+  end
+  it 'can create an event' do
+    @user1.create_event
+    expect(@user1.event).to eql(1)
+  end
+  it 'can send friend request to another user' do
+    @user1.add_friend(@user2)
+    expect(@user2.friend_request_message)
+      .to eql("#{@user1.username} want to connect with you")
+  end
+  it 'can read friend request message' do
+    @user1.add_friend(@user2)
+    @user2.friend_request_message
+    expect(@user2.friend_request_message).to eql(nil)
+  end
+  it 'can accept friend request' do
+    @user1.add_friend(@user2)
+    @user2.accept_friend_request(@user1)
+    expect(@user2.get_friend('username1')).to eql(@user1)
+  end
+  it 'friend list will increase if its friend request message is accepted' do
+    @user1.add_friend(@user2)
+    @user1.add_friend(@user3)
+    @user2.accept_friend_request(@user1)
+    @user3.accept_friend_request(@user1)
+    expect(@user1.get_friend('username3')).to eql(@user3)
+  end
+  it 'bank information is optional' do
+    expect(@user3.bank_information).to be(false)
+  end
+  it 'can set bank information' do
+    @user3.set_bank_information('8854512', 'LT845554')
+    expect(@user3.bank_information).to be(true)
+    #expect(@user3.transaction.bank_acc_number).to eql('LT845554')
+    #expect(@user3.transaction.card_number).to eql('8854512')
+  end
+  it 'can decline friend request' do
+    @user1.add_friend(@user2)
+    @user2.decline_friend_request
+    expect(@user2.friend_request_message).to eql(nil)
+  end
+  it 'will not add friend to its friends list if friend request is declined' do
+    @user1.add_friend(@user2)
+    @user2.decline_friend_request
+    expect(@user1.get_friend('username2')).to eql(nil)
+  end
+end
