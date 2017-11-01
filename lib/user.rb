@@ -3,6 +3,7 @@ require 'userinfo'
 require 'user_activity'
 # User class describes users information and its functionality
 # hajsdh
+#asdsad
 class User
   attr_reader :user_info, :transaction, :user_activity
   def initialize(username, password, name_surname)
