@@ -1,5 +1,4 @@
 require 'spec_helper'
-#asdasd
 describe Transaction do
   before do
     @user1 = User.new('username1', 'password', 'name1_surname1')
