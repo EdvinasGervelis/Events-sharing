@@ -2,17 +2,16 @@ require '/home/edvinas/Desktop/Events-sharing/lib/event.rb'
 require '/home/edvinas/Desktop/Events-sharing/lib/user_messages.rb'
 ## user class additional information
 class Useractivity
-  attr_reader :messages, :event, :friends, :user_object
+  attr_reader :user_messages, :events, :friends, :user_object
   def initialize(user_object)
-    @messages = UserMessages.new()
+    @user_messages = UserMessages.new()
     @user_object = user_object
-    @event = 0
+    @events = []
     @friends = []
   end
 
-  def create_event
-    @event += 1
-
+  def create_event(event_name, location, date, price, accesability)
+    events << Event.new(event_name, location, date, price, accesability, user_object)
   end
 
   def add_friend(friend_object)
@@ -24,18 +23,18 @@ class Useractivity
   end
 
   def add_request_message(user)
-    messages.request_messages << user # {}"#{user.user_info.username} want to connect"
+    user_messages.request_messages << user # {}"#{user.user_info.username} want to connect"
   end
 
   def friend_request_message(index)
    
-    message = "#{messages.request_messages.fetch(index).user_info.username} want to connect with you"
-    @messages.request_messages[index] = nil
+    message = "#{user_messages.request_messages.fetch(index).user_info.username} want to connect with you"
+    @user_messages.request_messages[index] = nil
     message
   end
 
   def decline_friend_request(index)
-    @messages.request_messages[index] = nil
+    @user_messages.request_messages[index] = nil
   end
 
   def accept_friend_request(friend_object)

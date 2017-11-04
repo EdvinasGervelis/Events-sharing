@@ -9,8 +9,32 @@ describe Useractivity do
   #  expect(@user1.user_activity.friend_request_message).to eql(nil)
   #end
   it 'can create an event' do
-    @user1.user_activity.create_event
-    expect(@user1.user_activity.event).to eql(1)
+    @user1.user_activity.create_event('event_name', 'location', 'date', 1, 'public')
+    expect(@user1.user_activity.events[0]).not_to be(nil)
+  end
+  it 'created event have name' do
+    @user1.user_activity.create_event('event_name', 'location', 'date', 1, 'public')
+    expect(@user1.user_activity.events[0].ticket.event_name).to eql('event_name')
+  end
+  it 'created event have location' do
+    @user1.user_activity.create_event('event_name', 'location', 'date', 1, 'public')
+    expect(@user1.user_activity.events[0].ticket.location).to eql('location')
+  end
+  it 'created event have date' do
+    @user1.user_activity.create_event('event_name', 'location', 'date', 1, 'public')
+    expect(@user1.user_activity.events[0].ticket.date).to eql('date')
+  end
+  it 'created event have price' do
+    @user1.user_activity.create_event('event_name', 'location', 'date', 1, 'public')
+    expect(@user1.user_activity.events[0].ticket.price).to eql(1)
+  end
+  it 'created event have accessability' do
+    @user1.user_activity.create_event('event_name', 'location', 'date', 1, 'public')
+    expect(@user1.user_activity.events[0].accessability).to eql('public')
+  end
+  it 'created event have organizator' do
+    @user1.user_activity.create_event('event_name', 'location', 'date', 1, 'public')
+    expect(@user1.user_activity.events[0].information.organizator).to eql(@user1)
   end
   it 'can send friend request to another user' do
     @user1.user_activity.add_friend(@user2)
@@ -20,7 +44,7 @@ describe Useractivity do
   it 'can read friend request message' do
     @user1.user_activity.add_friend(@user2)
     @user2.user_activity.friend_request_message(0)
-    expect(@user2.user_activity.messages.request_messages[0]).to eql(nil)
+    expect(@user2.user_activity.user_messages.request_messages[0]).to eql(nil)
   end
   it 'can accept friend request' do
     @user1.user_activity.add_friend(@user2)
@@ -37,7 +61,7 @@ describe Useractivity do
   it 'can decline friend request' do
     @user1.user_activity.add_friend(@user2)
     @user2.user_activity.decline_friend_request(0)
-    expect(@user2.user_activity.messages.request_messages[0]).to eql(nil)
+    expect(@user2.user_activity.user_messages.request_messages[0]).to eql(nil)
   end
   it 'will not add friend to its friends list if friend request is declined' do
     @user1.user_activity.add_friend(@user2)

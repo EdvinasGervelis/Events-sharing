@@ -6,4 +6,6 @@ class EventTicket
   	@date = date
   	@price = price
   end
+
+  
 end

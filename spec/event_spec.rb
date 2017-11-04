@@ -9,22 +9,22 @@ describe Event do
     @event = Event.new('event_name', 'location', '2001-01-01', 1, 'public', @user1)
   end
   it 'have name' do
-    expect(@event.event_ticket.event_name).to eql('event_name')
+    expect(@event.ticket.event_name).to eql('event_name')
   end
   it 'have location' do
-    expect(@event.event_ticket.location).to eql('location')
+    expect(@event.ticket.location).to eql('location')
   end
   it 'have its date' do
-    expect(@event.event_ticket.date).to eql('2001-01-01')
+    expect(@event.ticket.date).to eql('2001-01-01')
   end
   it 'have its price' do
-    expect(@event.event_ticket.price).to eql(1)
+    expect(@event.ticket.price).to eql(1)
   end
   it 'have accesability' do 
-    expect(@event.accesability).to eql('public')
+    expect(@event.accessability).to eql('public')
   end
   it 'have its organizator' do
-    expect(@event.event_information.organizator).to eql(@user1)
+    expect(@event.information.organizator).to eql(@user1)
   end
   it 'have its participnats' do
     expect(@event.participants).to eql([])
@@ -35,7 +35,7 @@ describe Event do
   end
   it 'add money ti its balance if ticket is sold' do
     @event.sell_ticket(@user2)
-    expect(@event.event_information.event_balance).to eql(1)
+    expect(@event.information.event_balance).to eql(1)
   end
   it 'ticket buyer will appear in participants list' do
     @event.sell_ticket(@user2)
@@ -43,11 +43,11 @@ describe Event do
   end
   it 'ticket will appeat in buyer ticket list' do
     @event.sell_ticket(@user2)
-    expect(@user2.tickets).to include(@event.event_ticket)
+    expect(@user2.tickets).to include(@event.ticket)
   end
   it 'will send message to ivited user' do
     @event.invite_user(@user2)
-    expect(@user2.user_activity.messages.messages[0]).to eql("#{@event.event_information.organizator} invited you to #{@event.event_ticket.event_name} event")
+    expect(@user2.user_activity.user_messages.messages[0]).to eql("#{@event.information.organizator} invited you to #{@event.ticket.event_name} event")
   end
   it 'ivited user will appear in participants list' do
      @event.invite_user(@user2)
@@ -55,7 +55,12 @@ describe Event do
   end
   it 'ticket will appear in in invited users tickets list' do
      @event.invite_user(@user2)
-     expect(@user2.tickets).to include(@event.event_ticket)
+     expect(@user2.tickets).to include(@event.ticket)
+  end
+
+  it 'adds reviews' do
+    @event.add_review("review")
+    expect(@event.information.reviews).to include('review')
   end
 
 end

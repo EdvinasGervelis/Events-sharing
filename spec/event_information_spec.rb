@@ -2,16 +2,24 @@ require 'spec_helper.rb'
 describe EventInformation do
   before do
     @user = User.new('username1', 'password', 'name1_surname1')
-    @event_information = EventInformation.new(@user)
+    @information = EventInformation.new(@user)
   end
   it 'have organizator' do
-    expect(@event_information.organizator).to eql(@user)
+    expect(@information.organizator).to eql(@user)
   end
   it 'have description' do
-    expect(@event_information.description).to eql(nil)
+    expect(@information.description).to eql(nil)
   end
   it 'have reviews' do
-     expect(@event_information.reviews).to eql([])
+     expect(@information.reviews).to eql([])
+  end
+  it 'have balance' do
+     expect(@information.event_balance).to eql(0)
+  end
+  
+  it 'increase event balance when ticket is sold' do
+     @information.increase_balance(1)
+     expect(@information.event_balance).to be(1)
   end
 
 end

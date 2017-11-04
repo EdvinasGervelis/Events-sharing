@@ -6,11 +6,7 @@ class EventInformation
   	@event_balance = 0
   end
 
-  def add_review(review)
-    @reviews << review
-  end
-
-  def sell_ticket(sum)
+  def increase_balance(sum)
     @event_balance += sum
   end
 
