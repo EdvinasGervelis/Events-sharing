@@ -1,4 +1,5 @@
-# user class additional information
+require '/home/edvinas/Desktop/Events-sharing/lib/event.rb'
+## user class additional information
 class Useractivity
   attr_reader :request_message, :event, :friends, :user_object
   def initialize(user_object)

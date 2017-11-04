@@ -1,6 +1,6 @@
-require 'transaction'
-require 'userinfo'
-require 'user_activity'
+require '/home/edvinas/Desktop/Events-sharing/lib/transaction.rb'
+require '/home/edvinas/Desktop/Events-sharing/lib/userinfo.rb'
+require '/home/edvinas/Desktop/Events-sharing/lib/user_activity.rb'
 # User class describes users information and its functionality
 class User
   attr_reader :user_info, :transaction, :user_activity

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require '/home/edvinas/Desktop/Events-sharing/spec/spec_helper'
 describe Transaction do
   before do
     @user1 = User.new('username1', 'password', 'name1_surname1')
