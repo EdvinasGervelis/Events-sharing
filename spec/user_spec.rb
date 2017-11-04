@@ -34,4 +34,7 @@ describe User do
     @user3.set_bank_information('8854512', 'LT845554')
     expect(@user3.transaction.card_number).to eql('8854512')
   end
+  it 'have tickets list' do
+    expect(@user1.tickets).to eql([])
+  end
 end
